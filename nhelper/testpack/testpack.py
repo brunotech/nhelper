@@ -22,9 +22,7 @@ class TestPack(object):
 
     @property
     def result(self):
-        if not self._is_ran:
-            return None
-        return self.performer.result
+        return self.performer.result if self._is_ran else None
 
     def add(self, new_behaviors: Union[Behavior, List[Behavior]]) -> None:
         """

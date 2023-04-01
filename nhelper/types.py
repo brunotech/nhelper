@@ -27,7 +27,7 @@ class BinarySpan(BaseModel):
     prob: float = None
 
     def __str__(self):
-        return str(self.start) + "_" + str(self.end)
+        return f"{str(self.start)}_{str(self.end)}"
 
     def __hash__(self):
         return hash(str(self))
@@ -37,8 +37,10 @@ class BinarySpan(BaseModel):
 
     def __eq__(self, other):
         if other.__class__ is self.__class__:
-            return str(self.start) + "_" + str(self.end) == \
-                   str(other.start) + "_" + str(other.end)
+            return (
+                f"{str(self.start)}_{str(self.end)}"
+                == f"{str(other.start)}_{str(other.end)}"
+            )
 
 
 class Span(BinarySpan):
@@ -46,12 +48,14 @@ class Span(BinarySpan):
     label: Union[Union[str, int], List[Union[str, int]]]
 
     def __str__(self):
-        return str(self.start) + "_" + str(self.end) + "_" + str(self.label)
+        return f"{str(self.start)}_{str(self.end)}_{str(self.label)}"
 
     def __eq__(self, other):
         if other.__class__ is self.__class__:
-            return str(self.start) + "_" + str(self.end) + "_" + str(self.label) == \
-                   str(other.start) + "_" + str(other.end) + "_" + str(other.label)
+            return (
+                f"{str(self.start)}_{str(self.end)}_{str(self.label)}"
+                == f"{str(other.start)}_{str(other.end)}_{str(other.label)}"
+            )
 
     def to_binary(self):
         """"""

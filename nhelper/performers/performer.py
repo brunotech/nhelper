@@ -18,7 +18,7 @@ class Performer(object):
         :param binarize: whether to compute performance on binarized predictions.
         """
         self.metric_type = metric_type
-        self.success_attr = "success" if not binarize else "binary_success"
+        self.success_attr = "binary_success" if binarize else "success"
         print(self.success_attr)
 
         self.eps = 1e-8
@@ -33,8 +33,8 @@ class Performer(object):
         if self._is_fitted:
             raise ValueError("Performer is already fitted.")
 
-        if not all([behavior._is_ran for behavior in behaviors]):
-            logging.info(f"The behaviors were not run, running them now...")
+        if not all(behavior._is_ran for behavior in behaviors):
+            logging.info("The behaviors were not run, running them now...")
             [b.run() for b in behaviors]
 
         flatten_outputs = [output for behavior in behaviors for output in behavior.outputs]

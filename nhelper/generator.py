@@ -42,10 +42,7 @@ class Generator(object):
         if len(templates) == 1:
             batch_unmasked = [batch_unmasked]
 
-        filled_mask = []
-        for unmasked in batch_unmasked:
-            filled_mask.append([pred["sequence"] for pred in unmasked])
-        return filled_mask
+        return [[pred["sequence"] for pred in unmasked] for unmasked in batch_unmasked]
 
     def translate(self, templates: Union[str, List[str]]) -> List[str]:
         """
@@ -63,14 +60,13 @@ class Generator(object):
         return [elt["generated_text"] for elt in translation]
 
     @staticmethod
-    def generate(templates: Union[str, List[str]], generate_all: bool = False, return_pos: bool = False, **kwargs) -> \
-            Union[List[str], Tuple[List[str], List[List[Tuple]]]]:
+    def generate(templates: Union[str, List[str]], generate_all: bool = False, return_pos: bool = False, **kwargs) -> Union[List[str], Tuple[List[str], List[List[Tuple]]]]:
         """"""
         if isinstance(templates, str):
             templates = [templates]
 
         assert max(map(len, kwargs.values())) == min(map(len, kwargs.values())) or generate_all, \
-            "Please provide the same number number of alternatives for all keywords or set 'generate_all' to True."
+                "Please provide the same number number of alternatives for all keywords or set 'generate_all' to True."
 
         if generate_all:
             combined_kwargs = [dict(zip(kwargs, t)) for t in product(*kwargs.values())]
@@ -90,7 +86,4 @@ class Generator(object):
                         positions.append((start, start + len(word), label, word))
                     all_positions.append(positions)
 
-        if return_pos:
-            return generations, all_positions
-
-        return generations
+        return (generations, all_positions) if return_pos else generations

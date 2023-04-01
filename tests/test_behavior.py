@@ -42,7 +42,7 @@ class TestSequenceClassificationBehavior:
         )
         behavior.run()
         assert len(behavior.outputs) == n_samples
-        assert all([b.y_pred is not None for b in behavior.outputs])
+        assert all(b.y_pred is not None for b in behavior.outputs)
 
         with pytest.raises(ValueError):
             behavior.run()
@@ -93,7 +93,7 @@ class TestMultiLabelSequenceClassificationBehavior:
         )
         behavior.run()
         assert len(behavior.outputs) == n_samples
-        assert all([b.y_pred is not None for b in behavior.outputs])
+        assert all(b.y_pred is not None for b in behavior.outputs)
 
         with pytest.raises(ValueError):
             behavior.run()
@@ -143,7 +143,7 @@ class TestSpanClassificationBehavior:
         )
         behavior.run()
         assert len(behavior.outputs) == n_samples
-        assert all([b.y_pred is not None for b in behavior.outputs])
+        assert all(b.y_pred is not None for b in behavior.outputs)
 
         with pytest.raises(ValueError):
             behavior.run()
@@ -200,7 +200,7 @@ class TestTokenClassificationBehavior:
         )
         behavior.run()
         assert len(behavior.outputs) == n_samples
-        assert all([b.y_pred is not None for b in behavior.outputs])
+        assert all(b.y_pred is not None for b in behavior.outputs)
 
         with pytest.raises(ValueError):
             behavior.run()

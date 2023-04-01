@@ -28,7 +28,7 @@ class TestGenerator:
 
         output = generator_fill.fill_mask("Hello I'm a [MASK] model.", top_k=5)
         assert len(output[0]) == 5
-        assert not any(["[MASK]" in pred for pred in output])
+        assert all("[MASK]" not in pred for pred in output)
 
         outputs = generator_fill.fill_mask(
             ["Hello I'm a [MASK] model.", "Hello [MASK]"],

@@ -113,8 +113,9 @@ class TestPyTorchTestPack:
         testpack.add(seq_classification_behavior)
 
         pt_testpack_from_testpack = PyTorchTestPack.from_testpack(testpack, self.identity)
-        assert sorted([elt for elt in pt_testpack_from_testpack], key=lambda d: d["name"]) == \
-               sorted([elt for elt in pt_testpack], key=lambda d: d["name"])
+        assert sorted(
+            list(pt_testpack_from_testpack), key=lambda d: d["name"]
+        ) == sorted(list(pt_testpack), key=lambda d: d["name"])
 
     def test_from_behaviors(self, seq_classification_behavior, seq_classification_behavior2):
         """"""
@@ -133,5 +134,6 @@ class TestPyTorchTestPack:
             processor=self.identity
         )
 
-        assert sorted([elt for elt in pt_testpack2], key=lambda d: d["name"]) == \
-               sorted([elt for elt in pt_testpack], key=lambda d: d["name"])
+        assert sorted(list(pt_testpack2), key=lambda d: d["name"]) == sorted(
+            list(pt_testpack), key=lambda d: d["name"]
+        )

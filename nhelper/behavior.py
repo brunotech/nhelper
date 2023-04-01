@@ -104,11 +104,11 @@ class SequenceClassificationBehavior(Behavior):
     def run(self) -> None:
         """"""
         if self._is_ran:
-            raise ValueError(f"This 'Behavior' has already been ran.")
+            raise ValueError("This 'Behavior' has already been ran.")
         predictions = self.predict_fn(self.samples)
 
         for prediction, truth, text in zip(predictions, self.labels, self.samples):
-            if isinstance(prediction, tuple) or isinstance(prediction, list):
+            if isinstance(prediction, (tuple, list)):
                 y_pred, prob = prediction
             else:
                 y_pred = prediction
@@ -148,7 +148,7 @@ class MultiLabelSequenceClassificationBehavior(Behavior):
     def run(self) -> None:
         """"""
         if self._is_ran:
-            raise ValueError(f"This 'Behavior' has already been ran.")
+            raise ValueError("This 'Behavior' has already been ran.")
         predictions = self.predict_fn(self.samples)
 
         for prediction, truth, text in zip(predictions, self.labels, self.samples):
@@ -192,7 +192,7 @@ class SpanClassificationBehavior(Behavior):
     def run(self) -> None:
         """"""
         if self._is_ran:
-            raise ValueError(f"This 'Behavior' has already been ran.")
+            raise ValueError("This 'Behavior' has already been ran.")
 
         predictions = self.predict_fn(self.samples)
 
@@ -246,7 +246,7 @@ class TokenClassificationBehavior(Behavior):
     def run(self) -> None:
         """"""
         if self._is_ran:
-            raise ValueError(f"This 'Behavior' has already been ran.")
+            raise ValueError("This 'Behavior' has already been ran.")
 
         predictions = self.predict_fn(self.samples)
 
@@ -296,10 +296,6 @@ class BehaviorSet(set):
 
     def update(self, values: List[Behavior]):
         """"""
-        error_values = []
-        for value in values:
-            if value in self:
-                error_values.append(value)
-        if error_values:
+        if error_values := [value for value in values if value in self]:
             raise DuplicateBehaviorError(f"Behavior(s) '{error_values}' already present in set.")
         super().update(values)
